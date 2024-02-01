@@ -1,7 +1,7 @@
 10 '###################################
 20 '# TITLE Sample Program
 30 '#  for Grove-LCD RGB Backlight V5.0
-40 '# Version 0.1.0 Update 20240127-1
+40 '# Version 0.1.1 Update 20240201-1
 50 '# LICENSE
 60 '#  These codes are licensed under CC0.
 70 '#  http://creativecommons.org/publicdomain/zero/1.0/deed.ja
@@ -10,8 +10,8 @@
 110 SCREEN 1,0,0
 120 COLOR 15,4,7
 130 WIDTH 32
-140 DEFINT A-Z
-150 KEY OFF
+140 KEY OFF
+150 DEFINT A-Z
 160 CLS
 1000 '################################
 1010 ' Constant Definition
@@ -23,14 +23,14 @@
 1400 '################################
 1410 ' Variable Definitions
 1420 '################################
-1500 '### For Subroutine
-1510 IV=0:'Input Value
-1520 IS$="":'Input String
-1600 '### For IoT
-1610 IO=0:'IoT Flag(IO<1:IoT Disable)
-1630 TL$="":'LCD Device Tree
-1640 TB$="":'Backlight Device Tree
-1650 DIM DS$(10)
+1500 '### For IoT
+1510 IO=0:'IoT Flag(IO<1:IoT Disable)
+1530 TL$="":'LCD Device Tree
+1540 TB$="":'Backlight Device Tree
+1550 DIM DS$(10)
+1600 '### For Sub Routine
+1610 IV=0:'Input Integer
+1620 IS$="":'Input String
 2000 '################################
 2010 '# Initialize
 2020 '################################
@@ -120,7 +120,8 @@
 41100 IF IO<1 THEN 41130
 41110 LS$=CHR$(CL)+CHR$(IV)
 41120 _IOTPUT(TL$,LS$)
-41130 RETURN
+41130 LS$=""
+41140 RETURN
 42000 '#############
 42010 '# LCD Send Data
 42020 '#  Input Values
@@ -133,7 +134,8 @@
 42110 IF LEN(IS$)<1 THEN 42140
 42120 LS$=CHR$(DL)+IS$
 42130 _IOTPUT(TL$,LS$)
-42140 RETURN
+42140 LS$=""
+42150 RETURN
 43000 '#############
 43010 '# Backlight Send Data
 43020 '#  Input Values
@@ -157,7 +159,8 @@
 44110 IF IV<0 THEN 44140
 44120 IS$=CHR$(&H6)+CHR$(IV)
 44130 GOSUB 43000:'Backlight Send Data
-44140 RETURN
+44140 IS$=""
+44150 RETURN
 45000 '#############
 45010 '# Backlight Set for GREEN
 45020 '#  Input Values
@@ -170,7 +173,8 @@
 45110 IF IV<0 THEN 45140
 45120 IS$=CHR$(&H7)+CHR$(IV)
 45130 GOSUB 43000:'Backlight Send Data
-45140 RETURN
+45140 IS$=""
+45150 RETURN
 46000 '#############
 46010 '# Backlight Set for BLUE
 46020 '#  Input Values
@@ -183,7 +187,8 @@
 46110 IF IV<0 THEN 46140
 46120 IS$=CHR$(&H8)+CHR$(IV)
 46130 GOSUB 43000:'Backlight Send Data
-46140 RETURN
+46140 IS$=""
+46150 RETURN
 47000 '#############
 47010 '# LCD Inintialize
 47020 '#   for Grove-LCD RGB Backlight V5.0
@@ -217,7 +222,8 @@
 48140 'Backlight LED All On
 48150 IS$=CHR$(&H4)+CHR$(&H15)
 48160 GOSUB 43000:'Backlight Send Data
-48170 RETURN
+48170 IS$=""
+48180 RETURN
 49000 '#############
 49010 '# Create Char
 49020 '#  Input Values
